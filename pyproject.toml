@@ -16,8 +16,9 @@
 
 [project]
 name = "hw1"
-version = ...
+version = "0.0.1"
 dependencies = [
-    "pytest",  # must include pytest because we use it for autograding
-    ...
+    "pytest", "numpy"
 ]
+
+description = "Homework 1"
