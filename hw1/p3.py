@@ -65,3 +65,29 @@ def quadratic(a, b, c):
                 If there is no real root, x1 == x2 == None.
     """
     # TODO: implement the stable quadratic equation solver here
+    delta = b**2 - 4*a*c
+
+    if a is None or a==0:
+        if b is None or b==0:
+            x1, x2 = None, None
+        else:
+            x1, x2 = (-c/b), None
+    
+    elif delta>0:
+        discrim = delta**0.5
+        if abs((4*a*c)/(b**2))<1e-4:
+            if b>0:
+                x1 = (-b - discrim)/(2*a)
+                x2 = (c/a)/x1
+            elif b<0:
+                x2 = (-b + discrim)/(2*a)
+                x1 = (c/a)/x2
+
+    
+    elif delta==0:
+        x1 = -b/(2*a)
+        x2 = None
+
+    elif delta<0:
+        x1, x2 = None, None
+    return x1, x2

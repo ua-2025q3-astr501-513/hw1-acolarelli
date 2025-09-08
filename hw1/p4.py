@@ -45,6 +45,21 @@ class CoupledOscillators:
             k  (float):              spring constant (assumed identical for all springs).
 
         """
+        N = len(X0)
+        stiffness = np.zeros((N,N))
+        mass_matrix = np.zeros((N,N))
+
+        for i in range(N):
+            for j in range(N):
+                if i==j:
+                    stiffness[i][j] = 2.
+                    mass_matrix[i][j] = m
+                else:
+                    stiffness[i][j] = -1.
+                    mass_matrix[i][j] = 0.
+        
+        self.K = stiffness
+
         # TODO: Construct the stiffness matrix K
         # TODO: Solve the eigenvalue problem for K to find normal modes
         # TODO: Store angular frequencies and eigenvectors

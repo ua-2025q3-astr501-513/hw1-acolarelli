@@ -38,6 +38,12 @@
 
 # TODO: Edit this sample idea.
 
+- topic: ODE Integrators
+  idea:  Simulate multiple objects (such as a planet around a star or a binary system) orbiting each other in space.
+
+- topic: Numerical Linear Algebra
+  idea:  Simulate the 2D Ising Model.
+
 - topic: Numerical Linear Algebra
   idea:  Develop a fast matrix multiplication algorithm to reduce
          energy consumption during deep learning inference.
