@@ -95,7 +95,7 @@ class CoupledOscillators:
         for i in range(self.N):
             left = self.X0[i-1] if i > 0 else 0.0      # fixed boundary at left
             right = self.X0[i+1] if i < self.N-1 else 0.0   # fixed boundary at right
-            x_double_dot[i] = (self.K @ self.inv_mass) * (left - 2*self.X0[i] + right)
+            x_double_dot[i] = (self.K @ self.inv_mass)[i] * (left - 2*self.X0[i] + right)
 
         soln = solve_ivp(x_double_dot, (0.,t), self.X0, t_eval = t)
         return soln.y
