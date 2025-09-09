@@ -24,6 +24,8 @@
 
 
 import numpy as np
+import scipy.linalg as la
+from scipy.integrate import solve_ivp
 
 
 class CoupledOscillators:
@@ -46,24 +48,35 @@ class CoupledOscillators:
 
         """
         N = len(X0)
+        self.N = N
         stiffness = np.zeros((N,N))
         mass_matrix = np.zeros((N,N))
 
         for i in range(N):
             for j in range(N):
                 if i==j:
-                    stiffness[i][j] = 2.
+                    stiffness[i][j] = 2. * k
                     mass_matrix[i][j] = m
                 else:
-                    stiffness[i][j] = -1.
+                    stiffness[i][j] = -1. * k
                     mass_matrix[i][j] = 0.
         
         self.K = stiffness
+        self.X0 = X0
 
         # TODO: Construct the stiffness matrix K
         # TODO: Solve the eigenvalue problem for K to find normal modes
         # TODO: Store angular frequencies and eigenvectors
         # TODO: Compute initial modal amplitudes M0 (normal mode decomposition)
+
+        evals, modes = np.linalg.eig(stiffness/mass_matrix)
+        amps = modes.T @ (mass_matrix @ X0)
+
+
+        self.Omega = np.sqrt(evals)
+        self.mass = mass_matrix
+        self.Modes = modes
+        self.M0 = amps
 
     def __call__(self, t):
         """Calculate the displacements of the oscillators at time t.
@@ -76,6 +89,14 @@ class CoupledOscillators:
 
         """
         # TODO: Reconstruct the displacements from normal modes
+        x_double_dot = np.zeros(self.N)
+        for i in range(self.N):
+            left = self.X0[i-1] if i > 0 else 0.0      # fixed boundary at left
+            right = self.X0[i+1] if i < self.N-1 else 0.0   # fixed boundary at right
+            x_double_dot[i] = (self.K/self.mass) * (left - 2*self.X0[i] + right)
+
+        soln = solve_ivp(x_double_dot, (0.,t), self.X0, t_eval = t)
+        return soln.y
 
 
 if __name__ == "__main__":
