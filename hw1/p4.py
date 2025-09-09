@@ -69,7 +69,8 @@ class CoupledOscillators:
         # TODO: Store angular frequencies and eigenvectors
         # TODO: Compute initial modal amplitudes M0 (normal mode decomposition)
 
-        evals, modes = np.linalg.eig(stiffness/mass_matrix)
+        mass_inv = np.linalg.inv(mass_matrix)
+        evals, modes = np.linalg.eig(stiffness @ mass_inv)
         amps = modes.T @ (mass_matrix @ X0)
 
 
