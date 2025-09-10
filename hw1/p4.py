@@ -60,7 +60,6 @@ class CoupledOscillators:
                     stiffness[i][j] = 2. * k
                 else:
                     stiffness[i][j] = -1. * k
-        
         self.K = stiffness
 
         # TODO: Construct the stiffness matrix K
@@ -69,12 +68,9 @@ class CoupledOscillators:
         # TODO: Compute initial modal amplitudes M0 (normal mode decomposition)
 
         evals, modes = np.linalg.eig(stiffness/m)
-        amps = modes @ X0
-
+        amps = np.linalg.solve(modes, X0)
 
         self.Omega = np.sqrt(evals)
-        #self.mass = mass_matrix
-        #self.inv_mass = mass_inv
         self.Modes = modes
         self.M0 = amps
 
@@ -89,6 +85,8 @@ class CoupledOscillators:
 
         """
         # TODO: Reconstruct the displacements from normal modes
+        Xt = self.M0 * np.cos(self.Omega *t)
+        return self.Modes @ Xt
 
 
 
