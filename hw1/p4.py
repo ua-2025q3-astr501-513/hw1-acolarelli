@@ -52,28 +52,25 @@ class CoupledOscillators:
         self.mass = m
         self.X0 = X0
         self.k = k
-        stiffness = np.zeros((N,N))
 
+        # Construct the stiffness matrix K
+        stiffness = np.zeros((N,N))
+        
         for i in range(N):
-                stiffness[i][i] = 2. * k
-                if i>0:
-                    stiffness[i-1][i] = -1. * k
+                stiffness[i][i] = 2. * k            # Diagonal elements equal to 2k
+                if i>0:                             
+                    stiffness[i-1][i] = -1. * k     # Off-diagonal elements equal to -k    
                 if i< N - 1:
                     stiffness[i+1][i] = -1. * k
-        
-        #stiffness = stiffness - k*np.eye(N, k=1) - k*np.eye(N, k=-1)
-        
-        self.K = stiffness
 
-        # TODO: Construct the stiffness matrix K
-        # TODO: Solve the eigenvalue problem for K to find normal modes
-        # TODO: Store angular frequencies and eigenvectors
-        # TODO: Compute initial modal amplitudes M0 (normal mode decomposition)
-
+        # Solve the eigenvalue problem for K to find normal modes
         evals, modes = np.linalg.eig(stiffness/m)
 
+        # Compute initial modal amplitudes M0 (normal mode decomposition)
         amps = np.linalg.solve(modes, X0)
 
+        # Store angular frequencies and eigenvectors
+        self.K = stiffness
         self.Omega = np.sqrt(np.abs(evals))
         self.Modes = modes
         self.M0 = amps
@@ -88,7 +85,7 @@ class CoupledOscillators:
             np.ndarray: displacements of the oscillators at time t.
 
         """
-        # TODO: Reconstruct the displacements from normal modes
+        # Reconstruct the displacements from normal modes
         Xt = self.M0 * np.cos(self.Omega *t)
         return self.Modes @ Xt
 

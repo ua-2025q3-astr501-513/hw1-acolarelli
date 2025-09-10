@@ -64,30 +64,35 @@ def quadratic(a, b, c):
                 If there is only one real root, x2 == None.
                 If there is no real root, x1 == x2 == None.
     """
-    # TODO: implement the stable quadratic equation solver here
+
+    # implement the stable quadratic equation solver here (I wrote this before I realized we could use numpy so it's not the most efficient, but it works)
     delta = b**2 - 4*a*c
 
+    # First check the degree of the polynomial
     if a is None or a==0:
         if b is None or b==0:
-            x1, x2 = None, None
+            x1, x2 = None, None     # If of order zero (constant), there are no roots
         else:
-            x1, x2 = (-c/b), None
+            x1, x2 = (-c/b), None   # If of order one (linear), there is one root, which is just the y-intercept
     
+    # Now check the discriminant
     elif delta>0:
-        discrim = delta**0.5
-        if abs((4*a*c)/(b**2))<1e-4:
+        discrim = delta**0.5            # If discriminant is positive, we have two real roots
+        if abs((4*a*c)/(b**2))<1e-4:    # Check if b^2 >> 4ac to avoid catastrophic cancellation
             if b>0:
                 x1 = (-b - discrim)/(2*a)
                 x2 = (c/a)/x1
             elif b<0:
                 x2 = (-b + discrim)/(2*a)
                 x1 = (c/a)/x2
+        else:                           # Now the "normal" quadratic equation solution
+            x1 = (-b - discrim)/(2*a)
+            x2 (-b + discrim)/(2*a)
 
-    
-    elif delta==0:
+    elif delta==0:                      # If discriminant is zero, there is only one real root
         x1 = -b/(2*a)
         x2 = None
 
-    elif delta<0:
+    elif delta<0:                       # If discriminant is negative, there are no real roots
         x1, x2 = None, None
     return x1, x2
