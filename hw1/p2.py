@@ -87,7 +87,19 @@ def multibit_negative(A):
         list, with the least significant digit be the first.
 
     """
-    # TODO: implement the function here
+    n = len(A)
+    one = [1]
+    for i in range(1,n):                # Create n-bit representation of 1 to add later
+        one.append(0)
+
+
+    negA = []
+    for i in range(n):
+        negA.append(NOT(A[i]))          # Invert each bit
+    
+    negA = multibit_adder(negA, one)    # Now use the multibit adder to add 1
+    return negA
+
 
 # We are now ready to implement subtraction using multibit_adder() and
 # multibit_negative().
@@ -109,4 +121,6 @@ def multibit_subtractor(A, B):
         digit be the first.
 
     """
-    # TODO: implement the function here
+    negB = multibit_negative(B)     # Flip B to negative
+    sub = multibit_adder(A, negB)   # Subtraction is just adding a negative number
+    return sub

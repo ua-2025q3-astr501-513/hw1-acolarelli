@@ -38,9 +38,14 @@
 
 # TODO: Edit this sample idea.
 
+- topic: ODE Integrators
+  idea:  Simulate multiple objects (such as a planet around a star or a binary system) orbiting each other in space using laws of gravitation.
+
 - topic: Numerical Linear Algebra
-  idea:  Develop a fast matrix multiplication algorithm to reduce
-         energy consumption during deep learning inference.
+  idea:  Simulate the 2D Ising Model as an array of spin up and spin down particles.
+
+- topic: ODE Integrators
+  idea:  Simulate stellar structure by solving various differential equations, such as hydrostatic equilibrium, mass continuity, energy transfer, and/or equations of state.
 
 # TODO: Add two more project ideas below, following the same format as
 # the example above.
