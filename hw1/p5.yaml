@@ -44,9 +44,8 @@
 - topic: Numerical Linear Algebra
   idea:  Simulate the 2D Ising Model.
 
-- topic: Numerical Linear Algebra
-  idea:  Develop a fast matrix multiplication algorithm to reduce
-         energy consumption during deep learning inference.
+- topic: ODE Integrators
+  idea:  Simulate stellar structure by solving various differential equations, such as hydrostatic equilibrium, mass continuity, energy transfer, and/or equations of state.
 
 # TODO: Add two more project ideas below, following the same format as
 # the example above.
