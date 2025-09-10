@@ -55,11 +55,14 @@ class CoupledOscillators:
         stiffness = np.zeros((N,N))
 
         for i in range(N):
-            for j in range(N):
-                if i==j:
-                    stiffness[i][j] = 2. * k
-                else:
-                    stiffness[i][j] = -1. * k
+                stiffness[i][i] = 2. * k
+                if i>0:
+                    stiffness[i-1][i] = -1. * k
+                if i< N - 1:
+                    stiffness[i+1][i] = -1. * k
+        
+        #stiffness = stiffness - k*np.eye(N, k=1) - k*np.eye(N, k=-1)
+        
         self.K = stiffness
 
         # TODO: Construct the stiffness matrix K
@@ -68,9 +71,10 @@ class CoupledOscillators:
         # TODO: Compute initial modal amplitudes M0 (normal mode decomposition)
 
         evals, modes = np.linalg.eig(stiffness/m)
+
         amps = np.linalg.solve(modes, X0)
 
-        self.Omega = np.sqrt(evals)
+        self.Omega = np.sqrt(np.abs(evals))
         self.Modes = modes
         self.M0 = amps
 
